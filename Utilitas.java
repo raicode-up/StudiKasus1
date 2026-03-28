@@ -1,10 +1,6 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.time.LocalDateTime;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class Utilitas {
     
@@ -30,25 +26,73 @@ public class Utilitas {
         }
         return false;
     }
-
+    
     public static boolean periksaFormatTanggalValid(String inputTanggal) {
-        try {
-            DateTimeFormatter formatTanggal = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            LocalDate.parse(inputTanggal, formatTanggal);
-            return true; 
-        } catch (DateTimeParseException e) {
-            return false; // Gagal dibaca (Format salah atau tanggal tidak logis)
+        if (inputTanggal.length() != 10) {
+            return false;
+        } 
+        
+        if (inputTanggal.charAt(2) != '-' || inputTanggal.charAt(5) != '-') {
+            return false;
         }
+        
+        for (int i = 0; i < inputTanggal.length(); i++) {
+            if (i == 2 || i == 5) {
+                continue;
+            }
+            char karakter = inputTanggal.charAt(i);
+            if (karakter < '0' || karakter > '9') {
+                return false;
+            }
+        }
+
+        int tgl = ((inputTanggal.charAt(0) - '0') * 10) + (inputTanggal.charAt(1) - '0');
+        int bln = ((inputTanggal.charAt(3) - '0') * 10) + (inputTanggal.charAt(4) - '0');
+
+        if (tgl < 1 || tgl > 31) {
+            System.out.println("\nError! Tanggal tidak valid (01-31).");
+            return false;
+        }
+        if (bln < 1 || bln > 12) {
+            System.out.println("\nError! Bulan tidak valid (01-12).");
+            return false;
+        }
+
+        return true; 
     }
 
     public static boolean periksaFormatJamValid(String inputJam) {
-        try {
-            DateTimeFormatter formatJam = DateTimeFormatter.ofPattern("HH.mm");
-            LocalTime.parse(inputJam, formatJam);
-            return true;
-        } catch (DateTimeParseException e) {
+        if (inputJam.length() != 5) {
             return false;
         }
+
+        if (inputJam.charAt(2) != '.') {
+            return false;
+        }
+
+        for (int i = 0; i < inputJam.length(); i++) {
+            if (i == 2) {
+                continue;
+            }
+            char c = inputJam.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+
+        int jam = ((inputJam.charAt(0) - '0') * 10) + (inputJam.charAt(1) - '0');
+        int menit = ((inputJam.charAt(3) - '0') * 10) + (inputJam.charAt(4) - '0');
+
+        if (jam < 0 || jam > 23) {
+            System.out.println("\nError! Jam tidak valid (00-23).");
+            return false;
+        }
+        if (menit < 0 || menit > 59) {
+            System.out.println("\nError! Menit tidak valid (00-59).");
+            return false;
+        }
+
+        return true;
     }
 
     public static boolean periksaTanggalMendatang(int hari, int bulan, int tahun) {
@@ -57,10 +101,16 @@ public class Utilitas {
         int bulanSekarang = waktuSekarang.getMonthValue();
         int hariSekarang = waktuSekarang.getDayOfMonth();
 
-        if (tahun > tahunSekarang) return true;
+        if (tahun > tahunSekarang) {
+            return true;
+        }
         if (tahun == tahunSekarang) {
-            if (bulan > bulanSekarang) return true;
-            if (bulan == bulanSekarang && hari >= hariSekarang) return true;
+            if (bulan > bulanSekarang) {
+                return true;
+            }
+            if (bulan == bulanSekarang && hari >= hariSekarang) {
+                return true;
+            }
         }
         return false;
     }
@@ -72,18 +122,26 @@ public class Utilitas {
             return true; 
         } 
         
-        if (jam > waktuSekarang.getHour()) return true;
-        if (jam == waktuSekarang.getHour() && menit > waktuSekarang.getMinute()) return true;
+        if (jam > waktuSekarang.getHour()) {
+            return true;
+        } 
+        
+        if (jam == waktuSekarang.getHour() && menit >= waktuSekarang.getMinute()) {
+            return true;
+        }
 
         return false;
     }
 
     public static void cetakGarisPembatas(String jenisGaris) {
-        switch(jenisGaris) {
-            case "atas":   System.out.println("╔══════════════════════════════════════════════╗"); break;
-            case "tengah": System.out.println("╠══════════════════════════════════════════════╣"); break;
-            case "tipis":  System.out.println("╟──────────────────────────────────────────────╢"); break;
-            case "bawah":  System.out.println("╚══════════════════════════════════════════════╝"); break;
+        if (jenisGaris.equals("atas")) {
+            System.out.println("╔══════════════════════════════════════════════╗");
+        } else if (jenisGaris.equals("tengah")) {
+            System.out.println("╠══════════════════════════════════════════════╣");
+        } else if (jenisGaris.equals("tipis")) {
+            System.out.println("╟──────────────────────────────────────────────╢");
+        } else if (jenisGaris.equals("bawah")) {
+            System.out.println("╚══════════════════════════════════════════════╝");
         }
     }
 

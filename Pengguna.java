@@ -12,10 +12,21 @@ public abstract class Pengguna {
         this.password = password;
     }
 
-    public String getNama() { return nama; }
-    public String getNoTelepon() { return noTelepon; }
-    public String getNikKtp() { return nikKtp; }
-    public String getPassword() { return password; }
+    public String getNama() {
+        return nama;
+    }
+
+    public String getNoTelepon() {
+        return noTelepon; 
+    }
+
+    public String getNikKtp() {
+        return nikKtp;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 
     public boolean cekPassword(String inputPassword) {
         return password.equals(inputPassword);

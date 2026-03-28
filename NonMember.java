@@ -6,15 +6,21 @@ public class NonMember extends Pengguna {
 
     @Override
     public double hitungPotonganHarga(double totalSewa) {
-        return 0; // Gak dapet diskon
+        return 0;
     }
 
     @Override
-    public String getStatusTipe() { return "Non-Member"; }
+    public String getStatusTipe() {
+        return "Non-Member";
+    }
     
     @Override
-    public String getDetailMember() { return "-"; }
+    public String getDetailMember() {
+        return "-";
+    }
 
     @Override
-    public boolean isMember() { return false; }
+    public boolean isMember() {
+        return false;
+    }
 }

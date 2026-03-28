@@ -21,8 +21,11 @@ public class KendaraanKecil extends Kendaraan {
 
             totalSupir = hari * TARIF_SUPIR_HARIAN;
 
-            if (sisa > 0 && sisa <= 12) totalSupir += TARIF_SUPIR_SETENGAH_HARI;
-            else if (sisa > 12) totalSupir += TARIF_SUPIR_HARIAN;
+            if (sisa > 0 && sisa <= 12) {
+                totalSupir += TARIF_SUPIR_SETENGAH_HARI;
+            } else if (sisa > 12) {
+                totalSupir += TARIF_SUPIR_HARIAN;
+            }
         }
         return totalMobil + totalSupir;
     }

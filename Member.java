@@ -35,7 +35,6 @@ public class Member extends Pengguna {
             int nomor = 1;
             for (Pemesanan nota : riwayatPenyewaan) {
                 System.out.println("\n--- Transaksi Ke-" + nomor + " ---");
-                // ✅ SUDAH DISINKRONKAN DENGAN PEMESANAN.JAVA
                 System.out.println("Ambil : " + nota.getTanggalAmbil() + " (Jam " + nota.getJamAmbil() + ")");
                 System.out.println("Balik : " + nota.getTanggalSelesai() + " (Jam " + nota.getJamSelesai() + ")");
                 System.out.println("Armada: " + nota.getKendaraan().getNamaKendaraan());
@@ -56,11 +55,17 @@ public class Member extends Pengguna {
     }
 
     @Override
-    public String getStatusTipe() { return "Member (Diskon 10%)"; }
+    public String getStatusTipe() {
+        return "Member (Diskon 10%)";
+    }
     
     @Override
-    public String getDetailMember() { return nomorMember; }
+    public String getDetailMember() {
+        return nomorMember;
+    }
 
     @Override
-    public boolean isMember() { return true; }
+    public boolean isMember() {
+        return true;
+    }
 }
