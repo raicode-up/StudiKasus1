@@ -26,7 +26,7 @@ public class Member extends Pengguna {
     @Override
     public void cekHistoriPenyewaan() {
         System.out.println("\n=============================================");
-        System.out.println("   HISTORI PENYEWAAN MEMBER: " + getNama());
+        System.out.println("     HISTORI PENYEWAAN MEMBER: " + getNama());
         System.out.println("=============================================");
         
         if (riwayatPenyewaan.isEmpty()) {
@@ -46,8 +46,13 @@ public class Member extends Pengguna {
         System.out.println("=============================================\n");
     }
 
-    public String getEmail() { return email; }
-    public String getNomorMember() { return nomorMember; }
+    public String getEmail() {
+        return email;
+    }
+
+    public String getNomorMember() {
+        return nomorMember;
+    }
 
     @Override
     public double hitungPotonganHarga(double totalSewa) {

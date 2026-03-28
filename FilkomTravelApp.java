@@ -52,11 +52,13 @@ public class FilkomTravelApp {
                         break; 
                     }
                 }
+                
                 if (penggunaAktif == null) { 
                     System.out.println("\nError! Nomor Telepon atau Password salah!"); 
                     continue; 
                 }
                 System.out.println("\nLogin Berhasil! Selamat datang " + penggunaAktif.getNama());
+                
             } else { 
                 System.out.println("\n=== SIGN UP ===");
                 System.out.print("Nama Lengkap    : "); 
@@ -79,6 +81,7 @@ public class FilkomTravelApp {
                 
                 System.out.print("Daftar sebagai Member? (y/n): ");
                 String pilihanMember = input.nextLine();
+                
                 if (pilihanMember.equalsIgnoreCase("y")) {
                     System.out.print("Email           : ");
                     String emailBaru = input.nextLine();
@@ -139,37 +142,17 @@ public class FilkomTravelApp {
                     }
                     Kendaraan kendaraanDipilih = katalogKendaraan.get(nomorArmadaDipilih - 1);
 
-                    String tanggalAmbil = "", jamAmbil = "";
-                    int h = 0, b = 0, th = 0, j = 0, m = 0;
+                    System.out.println("\n=== JADWAL PENGAMBILAN & PENGEMBALIAN ===");
+                    System.out.print("Tanggal Ambil (DD-MM-YYYY)  : "); 
+                    String tanggalAmbil = input.nextLine();
 
-                    while (true) {
-                        System.out.println("\n=== JADWAL PENGAMBILAN ===");
-                        System.out.print("Tanggal (DD-MM-YYYY): "); 
-                        tanggalAmbil = input.nextLine();
-                        System.out.print("Jam (HH.MM)         : "); 
-                        jamAmbil = input.nextLine();
-
-                        if (Utilitas.periksaFormatTanggalValid(tanggalAmbil) && Utilitas.periksaFormatJamValid(jamAmbil)) {
-                            h = ((tanggalAmbil.charAt(0) - '0') * 10) + (tanggalAmbil.charAt(1) - '0');
-                            b = ((tanggalAmbil.charAt(3) - '0') * 10) + (tanggalAmbil.charAt(4) - '0');
-                            th = ((tanggalAmbil.charAt(6) - '0') * 1000) + ((tanggalAmbil.charAt(7) - '0') * 100) + ((tanggalAmbil.charAt(8) - '0') * 10) + (tanggalAmbil.charAt(9) - '0');
-                            j = ((jamAmbil.charAt(0) - '0') * 10) + (jamAmbil.charAt(1) - '0');
-                            m = ((jamAmbil.charAt(3) - '0') * 10) + (jamAmbil.charAt(4) - '0');
-
-                            if (Utilitas.periksaTanggalMendatang(h, b, th) && Utilitas.periksaJamMendatang(h, b, th, j, m)) {
-                                break;
-                            } else {
-                                System.out.println("\nError! Waktu rental tidak boleh di masa lalu!");
-                            }
-                        } else {
-                            System.out.println("\nError! Format penulisan tanggal atau jam salah!");
-                        }
-                    }
+                    System.out.print("Jam Ambil (HH.MM)           : "); 
+                    String jamAmbil = input.nextLine();
 
                     int durasiSewa = 0;
                     Utilitas.tampilkanTabelPaketRental(kendaraanDipilih);
                     while (true) {
-                        int paketPilihan = Utilitas.validasiPilihanAngka(input, "Pilih Paket (1-3): ");
+                        int paketPilihan = Utilitas.validasiPilihanAngka(input, "Pilih Paket Durasi (1-3): ");
                         if (paketPilihan == 1) { 
                             durasiSewa = 6; 
                             break; 
@@ -182,16 +165,17 @@ public class FilkomTravelApp {
                                 break;
                             }
                             System.out.println("\nError! Durasi custom wajib antara 24-72 jam.");
+                        } else {
+                            System.out.println("\nError! Pilihan paket tidak valid.");
                         }
                     }
 
-                    int totalJamSelesai = j + durasiSewa;
-                    int jamSelesaiAngka = totalJamSelesai % 24;
-                    int tambahHari = totalJamSelesai / 24;
-                    int tglSelesaiAngka = h + tambahHari;
-                    
-                    String tanggalSelesai = String.format("%02d", tglSelesaiAngka) + "-" + String.format("%02d", b) + "-" + th;
-                    String jamSelesai = String.format("%02d", jamSelesaiAngka) + "." + String.format("%02d", m);
+                    System.out.println("\n(Durasi pilihan Anda: " + durasiSewa + " Jam)");
+                    System.out.print("Tanggal Selesai (DD-MM-YYYY): "); 
+                    String tanggalSelesai = input.nextLine();
+
+                    System.out.print("Jam Selesai (HH.MM)         : "); 
+                    String jamSelesai = input.nextLine();
 
                     boolean menggunakanSupir = false; 
                     String nomorSim = "-";
@@ -212,7 +196,7 @@ public class FilkomTravelApp {
                                 nomorSim = input.nextLine(); 
                                 break;
                             } else { 
-                                System.out.println("\nError! Pilihan tidak valid!"); 
+                                System.out.println("\nError! Pilihan tidak valid! Ketik 'ya' atau 'tidak'."); 
                             }
                         }
                     }
@@ -225,7 +209,15 @@ public class FilkomTravelApp {
                     Utilitas.cetakBarisRangkuman("Kendaraan", kendaraanDipilih.getNamaKendaraan()); 
                     Utilitas.cetakBarisRangkuman("Mulai", tanggalAmbil + " (" + jamAmbil + ")");
                     Utilitas.cetakBarisRangkuman("Selesai", tanggalSelesai + " (" + jamSelesai + ")"); 
-                    Utilitas.cetakBarisRangkuman("Layanan", menggunakanSupir ? "Pakai Supir" : "Lepas Kunci (SIM: " + nomorSim + ")");
+                    
+                    String jenisLayanan;
+                    if (menggunakanSupir) {
+                        jenisLayanan = "Pakai Supir";
+                    } else {
+                        jenisLayanan = "Lepas Kunci (SIM: " + nomorSim + ")";
+                    }
+                    Utilitas.cetakBarisRangkuman("Layanan", jenisLayanan);
+                    
                     Utilitas.cetakGarisPembatas("tengah"); 
                     Utilitas.cetakBarisRangkuman("Harga Sewa", "Rp " + String.format("%,.0f", biayaKotorSewa));
                     if (potonganDiskonMember > 0) {
@@ -237,7 +229,7 @@ public class FilkomTravelApp {
 
                     int konfirmasiBayar = 0;
                     while (true) {
-                        konfirmasiBayar = Utilitas.validasiPilihanAngka(input, "\n1. Konfirmasi Pemesanan dan Bayar\n2. Batalkan Pemesanan: ");
+                        konfirmasiBayar = Utilitas.validasiPilihanAngka(input, "\n1. Konfirmasi Pemesanan dan Bayar\n2. Batalkan Pemesanan\nPilih (1-2): ");
                         if (konfirmasiBayar == 1 || konfirmasiBayar == 2) {
                             break;
                         }
@@ -245,7 +237,7 @@ public class FilkomTravelApp {
                     }
 
                     if (konfirmasiBayar == 1) {
-                        Pemesanan pesananBaru = new Pemesanan(penggunaAktif, kendaraanDipilih, durasiSewa, tanggalAmbil, jamAmbil, menggunakanSupir, nomorSim);
+                        Pemesanan pesananBaru = new Pemesanan(penggunaAktif, kendaraanDipilih, durasiSewa, tanggalAmbil, jamAmbil, tanggalSelesai, jamSelesai, menggunakanSupir, nomorSim);
                         pesananBaru.cetakStruk(); 
                         penggunaAktif.tambahRiwayat(pesananBaru);
                     } else {
@@ -255,4 +247,4 @@ public class FilkomTravelApp {
             }
         }
     }
-}   
+}

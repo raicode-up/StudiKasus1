@@ -79,8 +79,8 @@ public class Pemesanan {
             System.out.printf("║ No. SIM Driver  : %-39s ║\n", nomorSim);
         }
         
-        System.out.printf("║ Waktu Pengambilan: %-39s ║\n", tanggalAmbil + " " + jamAmbil);
-        System.out.printf("║ Waktu Pengembalian: %-38s ║\n", tanggalSelesai + " " + jamSelesai);
+        System.out.printf("║ Waktu Pengambilan : %-37s ║\n", tanggalAmbil + " " + jamAmbil);
+        System.out.printf("║ Waktu Pengembalian: %-37s ║\n", tanggalSelesai + " " + jamSelesai);
         System.out.printf("║ Durasi Sewa     : %-39s ║\n", lamaSewa + " Jam");
         System.out.println("╠═══════════════════════════════════════════════════════════╣");
         System.out.println("║                    RINCIAN PEMBAYARAN                     ║");
