@@ -1,6 +1,6 @@
 public class KendaraanKecil extends Kendaraan {
-    private static final double TARIF_SUPIR_HARIAN = 300000;
-    private static final double TARIF_SUPIR_SETENGAH_HARI = 150000;
+    private static final double TARIF_SUPIR_HARIAN = 200000;
+    private static final double TARIF_SUPIR_SETENGAH_HARI = 1500000;
 
     public KendaraanKecil(String namaKendaraan, int kapasitas, double hargaSewaDasar) {
         super(namaKendaraan, kapasitas, hargaSewaDasar);

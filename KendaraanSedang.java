@@ -1,7 +1,7 @@
 
 public class KendaraanSedang extends Kendaraan {
-    private static final double TARIF_SUPIR_HARIAN = 400000;
-    private static final double TARIF_SUPIR_1_SAMPAI_6_JAM = 120000;
+    private static final double TARIF_SUPIR_HARIAN = 300000;
+    private static final double TARIF_SUPIR_1_SAMPAI_6_JAM = 130000;
     private static final double TARIF_SUPIR_7_SAMPAI_12_JAM = 200000;
 
     public KendaraanSedang(String namaKendaraan, int kapasitas, double hargaSewaDasar) {
